@@ -65,7 +65,7 @@ app.get("/", async (req, res) => {
       <p><strong>Port :</strong> ${port}</p>
       <p><strong>IP serveur :</strong> ${serverIP}</p>
       <hr>
-      <h3>Informations client</h3>
+      <h3>Informations client :</h3>
       <p><strong>IP client :</strong> ${clientIP}</p>
     `);
 
