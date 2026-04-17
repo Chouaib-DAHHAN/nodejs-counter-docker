@@ -1,27 +1,23 @@
-name: Deploy Node.js JSON Counter
+name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '22'
+      - run: |
+          docker login ${{ secrets.ACR_LOGIN_SERVER }} \
+          -u ${{ secrets.ACR_USERNAME }} \
+          -p ${{ secrets.ACR_PASSWORD }}
 
-      - run: npm install
+      - run: |
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/app:latest .
 
-      - run: zip -r app.zip .
-
-      - uses: azure/webapps-deploy@v3
-        with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: app.zip
+      - run: |
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/app:latest
