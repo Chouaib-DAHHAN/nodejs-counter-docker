@@ -58,6 +58,7 @@ app.get("/", async (req, res) => {
 
     res.send(`
       <h2>Compteur de visites</h2>
+      <h2>(version conteneur) Docker </h2>
       <p><strong>Nombre de visites :</strong> ${count}</p>
       <hr>
       <h3>Informations serveur. </h3>
